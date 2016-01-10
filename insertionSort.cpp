@@ -15,7 +15,7 @@ int main(){
 		cin>>list[i];
 	}
 
-	list=insertSortion(list, n);
+	insertSortion(list, n);
 
 	for(int i=0; i<n; i++){
 		cout<<list[i]<<" ";
