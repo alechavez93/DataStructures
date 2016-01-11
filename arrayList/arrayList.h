@@ -6,7 +6,7 @@ class arrayList{
 
 private:
 	int currSize = 0;
-	int totalSize = 50;
+	int totalSize = 5;
 	T* list;
 
 public:
@@ -14,9 +14,9 @@ public:
 	arrayList();
 
 	//Destructor
-	~arrayList();
+	void eraseList();
 
-	//Get the current filled size of the arrayList
+	//Gets the current filled size of the arrayList
 	int getSize();
 
 	//Returns element at index

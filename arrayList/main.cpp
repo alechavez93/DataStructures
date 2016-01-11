@@ -1,10 +1,10 @@
-#include "arrayList.h"
+#include "arrayList.cpp"
 #include <iostream>
 
 using namespace std;
 
 int main(){
-
+	
 	arrayList<int> *myList = new arrayList<int>();
 	myList->add(2);
 	myList->add(4);
