@@ -30,7 +30,7 @@ T arrayList<T>::get(int index){
 
 template <class T>
 int arrayList<T>::indexOf(T element){
-	//Loops until it finds first element desired and returns its index
+	//Finds first element
 	for (int i = 0; i < currSize; i++){
 		if (list[i] == element)
 			return i;
@@ -41,12 +41,12 @@ int arrayList<T>::indexOf(T element){
 
 template <class T>
 void arrayList<T>::add(T element){
-	//If we have space we just add it at the end
+	//Enough space
 	if (currSize < totalSize){
 		list[currSize] = element;
 		currSize++;
 	}
-	//If we dont have space we increase the total size and then we insert the element
+	//No space
 	else{
 		increaseTotalSize(2);
 		list[currSize] = element;
@@ -56,19 +56,19 @@ void arrayList<T>::add(T element){
 
 template <class T>
 void arrayList<T>::increaseTotalSize(int factor){
-	//Creates a new array of type T with the new size
+	//Create a new array
 	int newSize = (int)(factor*totalSize);
 	T* newList = new T[newSize];
 
-	//Copy elements of current array
+	//Copy elements
 	for (int i = 0; i < currSize; i++){
 		newList[i] = list[i];
 	}
 
-	//Deletes old array
+	//Delete old array
 	eraseList();
 
-	//Copies pointer value to the old array and ready to use!
+	//Copies new to old
 	list = newList;
 	totalSize = newSize;
 	
@@ -80,6 +80,42 @@ void arrayList<T>::display(){
 	for (int i = 0; i < currSize; i++){
 		cout << list[i] << " ";
 	}
+}
+
+template <class T>
+void arrayList<T>::addElementAt(T element, int index){
+	//Enough space
+	if (currSize < totalSize){
+		//Push list right
+		for (int i = currSize - 1; i >= index; i--){
+			list[i + 1] = list[i];
+		}
+		//Insert element and update size
+		list[index] = element;
+		currSize++;
+	}
+	//No space in array
+	else{
+		//Increase size
+		increaseTotalSize(2);
+		//Push
+		for (int i = currSize - 1; i >= index; i--){
+			list[i + 1] = list[i];
+		}
+		//Insert
+		list[index] = element;
+		currSize++;
+	}
+}
+
+template <class T>
+void arrayList<T>::eraseAt(int index){
+	//Shift left
+	for (int i = index; i < currSize; i++){
+		list[i] = list[i + 1];
+	}
+	//Decrease size
+	currSize--;
 }
 
 

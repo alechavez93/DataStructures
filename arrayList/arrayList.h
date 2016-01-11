@@ -4,7 +4,7 @@
 template<class T>
 class arrayList{
 
-private:
+public:
 	int currSize = 0;
 	int totalSize = 5;
 	T* list;
@@ -29,10 +29,10 @@ public:
 	void add(T element);
 
 	//Add a new elemet to the specified index
-	void addAt(T element, int index);
+	void addElementAt(T element, int index);
 
 	//Erases an element at a given index
-	void erase(int index);
+	void eraseAt(int index);
 
 	//Internal function used to increase list size when full
 	void increaseTotalSize(int factor);
