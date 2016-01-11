@@ -36,6 +36,9 @@ public:
 
 	//Internal function used to increase list size when full
 	void increaseTotalSize(int factor);
+
+	//Displays all elements of the list separated by spaces
+	void display();
 };
 
 #endif

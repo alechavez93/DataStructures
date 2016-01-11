@@ -40,8 +40,29 @@ int arrayList<T>::indexOf(T element){
 }
 
 template <class T>
+void arrayList<T>::add(T element){
+	if (currSize < totalSize){
+		list[currSize] = element;
+		currSize++;
+	}
+	else{
+		increaseTotalSize(2);
+		list[currSize] = element;
+		currSize++;
+	}
+}
+
+template <class T>
 void arrayList<T>::increaseTotalSize(int factor){
 
+}
+
+template <class T>
+void arrayList<T>::display(){
+
+	for (int i = 0; i < currSize; i++){
+		cout << list[i] << " ";
+	}
 }
 
 
