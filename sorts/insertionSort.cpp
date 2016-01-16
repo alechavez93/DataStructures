@@ -7,7 +7,6 @@ int* insertionSort(int* list, int n);
 int main(){
 	int n;
 	int* list;
-	cout<<"Please insert n and then insert your list to be sorted: "<<endl;
 	cin>>n;
 	list=new int[n];
 
@@ -15,17 +14,16 @@ int main(){
 		cin>>list[i];
 	}
 
-	insertSortion(list, n);
+	insertionSort(list, n);
 
 	for(int i=0; i<n; i++){
-		cout<<list[i]<<" ";
+		cout<<list[i]<<endl;
 	}
 
-	system("pause");
 	return 0;
 }
 
-int* insertSortion(int* list, int n){
+int* insertionSort(int* list, int n){
 	int t;
 
 	for(int i=1; i<n; i++){
