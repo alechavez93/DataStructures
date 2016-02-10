@@ -63,21 +63,21 @@ private:
 	int size;
 	linkedList<T> *rows;
 	
-
-
+	
 //Functions
 public:
-	sparceMatrix();
-	void deleteMatrix();
-	void addMatrix(sparceMatrix matrix);
-	void searchValues(T* values);
-
+	sparceMatrix(int size);
+	//void deleteMatrix();
+	void fillMatrix();
+	void addMatrix(sparceMatrix *matrix);
+	void searchValues(int n, T* values);
 };
 
 
 //Functions for sparse matrix
 template<class T>
-sparceMatrix<T>::sparceMatrix() {
+sparceMatrix<T>::sparceMatrix(int size) {
+	this.size = size;
 	rows = new linkedList<T>[size];
 
 	for (int i = 0; i < size; i++)
@@ -85,11 +85,36 @@ sparceMatrix<T>::sparceMatrix() {
 }
 
 
+template<class T>
+void sparceMatrix<T>::addMatrix(sparceMatrix *matrix) {
+
+	for (int i = 0; i < size; i++) {
+		rows[i].addRow(matrix->rows[i]);
+	}
+
+}
+
+
+template<class T>
+void sparceMatrix<T>::searchValues(int n, T* values) {
+	for (int i = 0; i < size; i++) {
+		node<T> temp = rows[i].first->next;
+		while (temp != NULL) {
+			for (int j = 0; j < n; j++) {
+				if (values[j] == temp->value) {
+					cout << i << " " << values[j] << " ";
+				}
+			}
+			temp = temp->next;
+		}
+	}
+}
 
 
 
 
 //Functions for linkedlist
+//--------------------------------------------------------------------------------------------------------------------------
 template<class T>
 linkedList<T>::linkedList() {
 	first = new node<T>();
@@ -163,44 +188,70 @@ void linkedList<T>::add(int index, T element) {
 
 template<class T>
 void linkedList<T>::addRow(linkedList *list) {
-	node<T> newNode, temp2;
+	node<T> *newNode, *temp2;
 	prev = first;
 	temp = first->next;
-	temp2 = list->first->index;
+	temp2 = list->first;
 
-	while (temp2 != NULL) {
+	while (temp2 != NULL && temp != NULL) {
 
 		newNode = new node<T>();
 		newNode->index = temp2->index;
 		newNode->value = temp2->value;
 
-		while (temp != NULL) {
+		if (newNode->index < temp->index) {
 
-			if (newNode->index < temp->index) {
+			//We insert the new node before temp
+			newNode->next = temp;
+			prev->next = newNode;
+			prev = newNode;
+			size++;
+				
+		}
+		else if (newNode->index == temp->index) {
 
-				//We insert the new node before temp
-			}
-			else if (newNode->index == temp->index) {
+			//Newnode is in the same index as temp
+			temp->value += newNode->value;
+			delete newNode;
+			prev = temp;
+			temp = temp->next;
+		}
+		else {
 
-				//Newnode is in the same index as temp
-			}
-			else {
-
-				//Newnode goes after index
-				temp = temp->next;
-			}
+			//Newnode goes after index
+			prev = temp;
+			temp = temp->next;
 		}
 
 		//Jump to next adding node
 		temp2 = temp2->next;
 	}
 
+	last = prev;	//The last node becomes prev since temp = NULL
+
+	//If the second chain still has nodes we attach them at the end
+	while (temp2 != NULL) {
+
+		//Create a new node and copy temp2's value
+		newNode = new node<T>();
+		newNode->index = temp2->index;
+		newNode->value = temp2->value;
+
+		//Attach it at the end
+		last->next = newNode;
+		last = newNode;
+		
+		//Next node and increase size
+		temp2 = temp2->next;
+		size++;
+	}
 }
 
 
 template<class T>
 int* linkedList<T>::search(int *values) {
-
+	temp = first->next;
+	
 }
 
 #endif
