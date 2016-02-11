@@ -6,41 +6,52 @@ using namespace std;
 
 int main() {
 
-	linkedList<int> *list1 = new linkedList<int>();
-	linkedList<int> *list2 = new linkedList<int>();
+	int rows, numberPerRow, index, value, n, searchValue;
 
-	list1->add(0, 1); list1->add(6, 13);
-	list2->add(1, 7); list2->add(3, 9); list2->add(6, 7); list2->add(9, -5);
+	//Filling the first matrix
+	cin >> rows;
+	sparceMatrix<int> *A = new sparceMatrix<int>(rows);
 
-	sparceMatrix<int> *matrix = new sparceMatrix<int>(2);
-	matrix->rows[0] = list1;
-	matrix->rows[1] = list2;
+	for (int i = 0; i < rows; i++) {
+		cin >> numberPerRow;
 
-	sparceMatrix<int> *matrix2 = new sparceMatrix<int>(2);
+		for (int j = 0; j < numberPerRow; j++) {
+			cin >> index;
+			cin >> value;
 
-	list1 = new linkedList<int>();
-	list2 = new linkedList<int>();
-
-	list1->add(1, 4);	list1->add(3, 7);	list1->add(5, 7);
-	list2->add(0, 7);	list2->add(4, 10);
-
-	matrix2->rows[0] = list1;
-	matrix2->rows[1] = list2;
-
-	matrix->addMatrix(matrix2);
-
-	matrix->rows[0]->printList();
-	cout << endl;
-	matrix->rows[1]->printList();
-	cout << endl;
-
-	int *n = new int[4] {2, 4, 7, 1};
-	cout << endl << endl;
-	cout << "----------------------------------" << endl;
-	for (int i = 0; i < 4; i++) {
-		matrix->searchValues(n[i]);
-		cout << endl;
+			A->rows[i]->add(index, value);
+		}
 	}
+
+	//Filling the second matrix
+	cin >> rows;
+	sparceMatrix<int> *B = new sparceMatrix<int>(rows);
+
+	for (int i = 0; i < rows; i++) {
+		cin >> numberPerRow;
+
+		for (int j = 0; j < numberPerRow; j++) {
+			cin >> index;
+			cin >> value;
+
+			B->rows[i]->add(index, value);
+		}
+	}
+
+
+	//Adding the two matrices in A
+	A->addMatrix(B);
+
+
+	//Getting the search values
+	cin >> n;
+	for (int i = 0; i < n; i++) {
+		cin >> searchValue;
+
+		//Displaying the search values
+		A->searchValues(searchValue);
+	}
+
 
 
 	system("pause");

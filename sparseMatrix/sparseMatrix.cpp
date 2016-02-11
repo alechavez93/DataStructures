@@ -46,15 +46,13 @@ public:
 
 	//Add row (merges the upcoming list into ours acording to indexes)
 	void addRow(linkedList *list);
-
-	//Search list (passes an array of values, returns an array of positions [row, col])
-	int* search(int *values);
 };
-//----------------------------------------------------------------------------------------------------------------------------
+
 
 
 
 //SPARSE MATRIX CLASS
+//----------------------------------------------------------------------------------------------------------------------------
 template<class T>
 class sparceMatrix {
 
@@ -67,14 +65,15 @@ public:
 //Functions
 public:
 	sparceMatrix(int size);
-	//void deleteMatrix();
-	void fillMatrix();
 	void addMatrix(sparceMatrix *matrix);
 	void searchValues(T values);
 };
 
 
+
+
 //Functions for sparse matrix
+//----------------------------------------------------------------------------------------------------------------------------
 template<class T>
 sparceMatrix<T>::sparceMatrix(int size) {
 	this->size = size;
@@ -108,6 +107,7 @@ void sparceMatrix<T>::searchValues(T value) {
 			temp = temp->next;
 		}
 	}
+	cout << endl;
 }
 
 
@@ -251,11 +251,5 @@ void linkedList<T>::addRow(linkedList *list) {
 	}
 }
 
-
-template<class T>
-int* linkedList<T>::search(int *values) {
-	temp = first->next;
-	
-}
 
 #endif
