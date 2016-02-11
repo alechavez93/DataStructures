@@ -1,6 +1,4 @@
 #include <iostream>
-#include <sstream>
-#include <string>
 
 using namespace std;
 
@@ -66,7 +64,7 @@ public:
 public:
 	sparceMatrix(int size);
 	void addMatrix(sparceMatrix *matrix);
-	void searchValues(int n,T* value);
+	void searchValues(T values);
 };
 
 
@@ -95,32 +93,19 @@ void sparceMatrix<T>::addMatrix(sparceMatrix *matrix) {
 
 
 template<class T>
-void sparceMatrix<T>::searchValues(int n,T* value) {
-	ostringstream appender;
-	string * results = new string[n];
-
+void sparceMatrix<T>::searchValues(T value) {
 	node<T> *temp;
 
 	for (int i = 0; i < size; i++) {
 		temp = rows[i]->first->next;
 		while (temp != NULL) {
-			for(int j=0; j<n; j++){
-				
-				if (temp->value == value[j]) {
-					appender << i << " " << temp->index << " ";
-					results[j] += appender.str();
-					appender.str("");
-					appender.clear();
-				}	
+			if (temp->value == value) {
+				cout << i << " " << temp->index << " ";
 			}
-			
 			temp = temp->next;
 		}
 	}
-	
-	for (int i=0; i<n; i++){
-		cout << results[i] << endl;
-	}
+	cout << endl;
 }
 
 
@@ -273,8 +258,8 @@ void linkedList<T>::addRow(linkedList *list) {
 //----------------------------------------------------------------------------------------------------------------------------
 int main(int argc, char *argv[]) {
 	std::ios::sync_with_stdio(false);
+
 	int rows, numberPerRow, index, value, n, searchValue;
-	int * values;
 
 	//Filling the first matrix
 	cin >> rows;
@@ -313,16 +298,12 @@ int main(int argc, char *argv[]) {
 
 	//Getting the search values
 	cin >> n;
-	values = new int[n];
 	for (int i = 0; i < n; i++) {
 		cin >> searchValue;
-		values[i] = searchValue;
+
+		//Displaying the search values
+		A->searchValues(searchValue);
 	}
-	
-	
-	
-	//Displaying the search values
-	A->searchValues(n, values);
 
 
 	return 0;
