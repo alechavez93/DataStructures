@@ -59,9 +59,9 @@ template<class T>
 class sparceMatrix {
 
 //Fields
-private:
+public:
 	int size;
-	linkedList<T> *rows;
+	linkedList<T> **rows;
 	
 	
 //Functions
@@ -70,15 +70,15 @@ public:
 	//void deleteMatrix();
 	void fillMatrix();
 	void addMatrix(sparceMatrix *matrix);
-	void searchValues(int n, T* values);
+	void searchValues(T values);
 };
 
 
 //Functions for sparse matrix
 template<class T>
 sparceMatrix<T>::sparceMatrix(int size) {
-	this.size = size;
-	rows = new linkedList<T>[size];
+	this->size = size;
+	rows = new linkedList<T> *[size];
 
 	for (int i = 0; i < size; i++)
 		rows[i] = new linkedList<T>();
@@ -89,21 +89,21 @@ template<class T>
 void sparceMatrix<T>::addMatrix(sparceMatrix *matrix) {
 
 	for (int i = 0; i < size; i++) {
-		rows[i].addRow(matrix->rows[i]);
+		rows[i]->addRow(matrix->rows[i]);
 	}
 
 }
 
 
 template<class T>
-void sparceMatrix<T>::searchValues(int n, T* values) {
+void sparceMatrix<T>::searchValues(T value) {
+	node<T> *temp;
+
 	for (int i = 0; i < size; i++) {
-		node<T> temp = rows[i].first->next;
+		temp = rows[i]->first->next;
 		while (temp != NULL) {
-			for (int j = 0; j < n; j++) {
-				if (values[j] == temp->value) {
-					cout << i << " " << values[j] << " ";
-				}
+			if (temp->value == value) {
+				cout << i << " " << temp->index << " ";
 			}
 			temp = temp->next;
 		}
@@ -191,7 +191,7 @@ void linkedList<T>::addRow(linkedList *list) {
 	node<T> *newNode, *temp2;
 	prev = first;
 	temp = first->next;
-	temp2 = list->first;
+	temp2 = list->first->next;
 
 	while (temp2 != NULL && temp != NULL) {
 
@@ -206,7 +206,9 @@ void linkedList<T>::addRow(linkedList *list) {
 			prev->next = newNode;
 			prev = newNode;
 			size++;
-				
+
+			//Jump to next adding node after insertion
+			temp2 = temp2->next;
 		}
 		else if (newNode->index == temp->index) {
 
@@ -215,6 +217,9 @@ void linkedList<T>::addRow(linkedList *list) {
 			delete newNode;
 			prev = temp;
 			temp = temp->next;
+
+			//Jump to next adding node after insertion
+			temp2 = temp2->next;
 		}
 		else {
 
@@ -223,8 +228,7 @@ void linkedList<T>::addRow(linkedList *list) {
 			temp = temp->next;
 		}
 
-		//Jump to next adding node
-		temp2 = temp2->next;
+		
 	}
 
 	last = prev;	//The last node becomes prev since temp = NULL
