@@ -2,6 +2,7 @@
 #include <sstream>
 #include <string>
 
+
 using namespace std;
 
 //LINKED LIST CLASS 
@@ -98,6 +99,7 @@ template<class T>
 void sparceMatrix<T>::searchValues(int n,T* value) {
 	ostringstream appender;
 	string * results = new string[n];
+	
 
 	node<T> *temp;
 
@@ -107,6 +109,7 @@ void sparceMatrix<T>::searchValues(int n,T* value) {
 			for(int j=0; j<n; j++){
 				
 				if (temp->value == value[j]) {
+					
 					appender << i << " " << temp->index << " ";
 					results[j] += appender.str();
 					appender.str("");
@@ -117,10 +120,11 @@ void sparceMatrix<T>::searchValues(int n,T* value) {
 			temp = temp->next;
 		}
 	}
-	
+
 	for (int i=0; i<n; i++){
-		cout << results[i] << endl;
+		appender << results[i] << endl;
 	}
+	cout<<appender.str();
 }
 
 
@@ -227,12 +231,27 @@ void linkedList<T>::addRow(linkedList *list) {
 
 			//Newnode is in the same index as temp
 			temp->value += newNode->value;
-			delete newNode;
-			prev = temp;
-			temp = temp->next;
+			
+			//If the sum is  not zero
+			if(temp->value != 0){
+				delete newNode;
+				prev = temp;
+				temp = temp->next;
 
-			//Jump to next adding node after insertion
-			temp2 = temp2->next;
+				//Jump to next adding node after insertion
+				temp2 = temp2->next;
+			}
+			
+			//If the sum is zero
+			else{
+				
+				temp = temp->next;
+				prev->next = temp;
+				
+				//Jump to next adding node after insertion
+				temp2 = temp2->next;
+			}
+			
 		}
 		else {
 
@@ -272,7 +291,7 @@ void linkedList<T>::addRow(linkedList *list) {
 //Main function
 //----------------------------------------------------------------------------------------------------------------------------
 int main(int argc, char *argv[]) {
-	std::ios::sync_with_stdio(false);
+	ios::sync_with_stdio(false);
 	int rows, numberPerRow, index, value, n, searchValue;
 	int * values;
 
